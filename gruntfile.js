@@ -61,8 +61,8 @@ module.exports = function(grunt)
 
             prod: {
                 src: [
-                    '.build/scripts.min.js',
-                    '.build/styles.min.css'
+                    'build/scripts.min.js',
+                    'build/styles.min.css'
                 ],
 
                 dest: ['index.html']
