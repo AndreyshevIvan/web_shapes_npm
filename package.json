@@ -10,7 +10,9 @@
     "grunt-contrib-uglify": "^2.2.0",
     "grunt-contrib-watch": "^1.0.0",
     "grunt-eslint": "^19.0.0",
-    "grunt-file-hash": "^0.1.6"
+    "grunt-file-hash": "^0.1.6",
+    "grunt-hashres": "^0.4.1",
+    "grunt-open": "^0.2.3"
   },
   "scripts": {
     "start": "grunt"

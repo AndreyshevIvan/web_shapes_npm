@@ -85,7 +85,6 @@ module.exports = function(grunt)
                 tasks: ['concat', 'uglify', 'eslint', 'hashres:prod']
             },
 
-            // this can be deleted?
             html: {
                 files: ['*.html']
             }
