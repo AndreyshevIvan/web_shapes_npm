@@ -1,0 +1,206 @@
+body
+{
+    padding: 0;
+    margin: 0;
+    border: 0;
+    background-color: #2C3E50;
+    font-family: "Roboto Light", sans-serif;
+    color: #ECF0F1;
+}
+
+h1, h2, h3, h4, p
+{
+    margin: 0px;
+}
+
+input
+{
+    border: 0;
+    background-color: #ECF0F1;
+    font-weight: 800;
+}
+
+input:focus, textarea:focus, keygen:focus, select:focus
+{
+    outline-offset: 0;
+}
+
+:focus
+{
+    outline: none;
+    box-shadow: 0 0 10px #2C3E50, 0 0 10px #2C3E50;
+}
+
+h1
+{
+    font-size: 34px;
+    letter-spacing: -0.3px;
+}
+
+.clear
+{
+    clear: left;
+}
+
+.basic_font
+{
+    font-family: "Roboto Light", sans-serif;
+}
+
+.font_size_big
+{
+    font-size: 30px;
+}
+
+.application_box
+{
+    position: relative;
+    width: 1000px;
+    margin: 50px auto;
+}
+
+.menu
+{
+    box-sizing: border-box;
+    padding: 20px;
+    float: left;
+    color: #ECF0F1;
+    width: 300px;
+    height: 700px;
+    background-color: #B23B2E;
+    border-radius: 10px 0 0 10px;
+}
+
+.application_title
+{
+    display: block;
+    width: 100%;
+    text-align: center;
+    text-align: center;
+}
+
+.selecting_shapes_block
+{
+    width: 220px;
+    border-top: 1px solid #ECF0F1;
+    margin: 20px auto 0 auto;
+    box-sizing: border-box;
+    padding: 20px 0;
+}
+
+.shape_selector
+{
+    display: block;
+    margin: 0 auto;
+    font-family: "Roboto Light", sans-serif;
+    font-size: 20px;
+    width: 100%;
+    background-color: #ECF0F1;
+    border-radius: 3px;
+    padding-left: 6px;
+}
+
+.common_settings
+{
+    box-sizing: border-box;
+    width: 220px;
+    margin: 0 auto;
+    border-top: 1px solid #ECF0F1;
+    padding: 10px 0 0 0;
+    font-size: 15px;
+}
+
+.shape_characteristics
+{
+    padding: 10px 0;
+    border-bottom: 1px solid #ECF0F1;
+    width: 220px;
+    margin: 0 auto;
+    cursor: default;
+}
+
+.triangle_setting,
+.rectangle_setting,
+.circle_setting
+{
+    box-sizing: border-box;
+    width: 220px;
+    padding: 0 0 10px 0;
+    margin: 0 auto;
+    border-bottom: 1px solid #ECF0F1;
+}
+
+.shape_fill_color,
+.shape_outline_color,
+.shape_outline_thickness,
+.circle_radius,
+.circle_x,
+.circle_y,
+.triangle_x_first,
+.triangle_x_second,
+.triangle_x_third,
+.triangle_y_first,
+.triangle_y_second,
+.triangle_y_third,
+.rect_x_first,
+.rect_y_first,
+.rect_x_second,
+.rect_y_second
+{
+    border-radius: 3px;
+    box-sizing: border-box;
+    width: 100%;
+    padding: 5px 10px;
+    font-family: "Roboto Medium", sans-serif;
+    font-size: 14px;
+    margin: 3px 0 8px 0;
+}
+
+.coordinate_x
+{
+    float: left;
+    width: 40%;
+    font-size: 15px;
+}
+
+.coordinate_y
+{
+    float: right;
+    width: 40%;
+    font-size: 15px;
+}
+
+.draw_button
+{
+    box-sizing: border-box;
+    width: 80px;
+    display: block;
+    margin: 20px auto 0 auto;
+    font-family: "Roboto Light", sans-serif;
+    font-size: 16px;
+}
+
+.draw_button
+{
+    cursor: pointer;
+    box-sizing: border-box;
+    border-radius: 3px;
+    width: 100px;
+    text-align: center;
+    padding: 5px 10px;
+    border: 1px solid #ECF0F1;
+}
+
+.draw_button:hover
+{
+    background-color: #ECF0F1;
+    color: #2C3E50;
+}
+
+.drawing_area
+{
+    border-radius: 0 10px 10px 0;
+    display: block;
+    float: left;
+    background-color: #ECF0F1;
+}
