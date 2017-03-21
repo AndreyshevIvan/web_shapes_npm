@@ -5,7 +5,6 @@ body
     border: 0;
     background-color: #2C3E50;
     font-family: "Roboto Light", sans-serif;
-    color: #ECF0F1;
 }
 
 h1, h2, h3, h4, p
@@ -98,6 +97,12 @@ h1
     background-color: #ECF0F1;
     border-radius: 3px;
     padding-left: 6px;
+    color: #2c3e50;
+}
+
+.shape_selector option
+{
+    color: #2c3e50;
 }
 
 .common_settings
@@ -154,6 +159,7 @@ h1
     font-family: "Roboto Medium", sans-serif;
     font-size: 14px;
     margin: 3px 0 8px 0;
+    color: #2c3e50;
 }
 
 .coordinate_x
@@ -178,10 +184,6 @@ h1
     margin: 20px auto 0 auto;
     font-family: "Roboto Light", sans-serif;
     font-size: 16px;
-}
-
-.draw_button
-{
     cursor: pointer;
     box-sizing: border-box;
     border-radius: 3px;
@@ -189,6 +191,7 @@ h1
     text-align: center;
     padding: 5px 10px;
     border: 1px solid #ECF0F1;
+    color: #2c3e50;
 }
 
 .draw_button:hover

@@ -111,7 +111,7 @@ module.exports = function(grunt)
             'uglify',
             'cssmin',
             'eslint',
-            'hashres',
+            'hashres:prod',
             'connect:server',
             'watch'
 ]);
