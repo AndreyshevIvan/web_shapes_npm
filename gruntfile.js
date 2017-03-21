@@ -20,15 +20,15 @@ module.exports = function(grunt)
         concat: {
             dist: {
                 src: ['js/**/*.js'],
-                dest: 'build/shapes.js'
+                dest: 'build/scripts.js'
             }
         },
 
         // uglifying js files
         uglify: {
             build: {
-                src: 'build/shapes.js',
-                dest: 'build/shapes.min.js'
+                src: 'build/scripts.js',
+                dest: 'build/scripts.min.js'
             }
         },
 
@@ -41,7 +41,7 @@ module.exports = function(grunt)
 
             target: {
                 files: {
-                    'build/shapes.min.css': [
+                    'build/styles.min.css': [
                         'node_modules/bootstrap/dist/css/bootstrap.min.css',
                         'css/main.css'
                     ]
@@ -51,7 +51,7 @@ module.exports = function(grunt)
 
         // code analyser
         eslint: {
-            target: ['build/shapes.js']
+            target: ['build/scripts.js']
         },
 
         hashres: {
@@ -61,8 +61,8 @@ module.exports = function(grunt)
 
             prod: {
                 src: [
-                    'build/shapes.min.js',
-                    'build/shapes.min.css'
+                    '.build/scripts.min.js',
+                    '.build/styles.min.css'
                 ],
 
                 dest: ['index.html']
@@ -107,7 +107,12 @@ module.exports = function(grunt)
     grunt.loadNpmTasks('grunt-open');
 
     grunt.registerTask('default', [
-        'concat', 'uglify', 'cssmin',
-        'connect:server', 'hashres:prod', 'watch'
-    ]);
+            'concat',
+            'uglify',
+            'cssmin',
+            'eslint',
+            'hashres',
+            'connect:server',
+            'watch'
+]);
 };

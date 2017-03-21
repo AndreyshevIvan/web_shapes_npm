@@ -2,6 +2,7 @@
   "name": "shapes",
   "version": "1.0.0",
   "devDependencies": {
+    "bootstrap": "^3.3.7",
     "eslint": "^3.17.1",
     "grunt": "^1.0.1",
     "grunt-contrib-concat": "^1.0.1",
