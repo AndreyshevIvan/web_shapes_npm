@@ -3,7 +3,6 @@ module.exports = function(grunt)
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
 
-        // connects to the (local?) server
         connect: {
             server: {
                 options: {
@@ -16,7 +15,6 @@ module.exports = function(grunt)
             }
         },
 
-        // merge all js files
         concat: {
             dist: {
                 src: ['js/**/*.js'],
@@ -24,7 +22,6 @@ module.exports = function(grunt)
             }
         },
 
-        // uglifying js files
         uglify: {
             build: {
                 src: 'build/scripts.js',
@@ -32,7 +29,6 @@ module.exports = function(grunt)
             }
         },
 
-        // uglifying css files
         cssmin: {
             options: {
                 mergeIntoShorthands: false,
@@ -49,7 +45,6 @@ module.exports = function(grunt)
             }
         },
 
-        // code analyser
         eslint: {
             target: ['build/scripts.js']
         },
@@ -69,7 +64,6 @@ module.exports = function(grunt)
             }
         },
 
-        // Automatically calls procedures in tasks array
         watch: {
             options: {
                 livereload: true
