@@ -65,22 +65,22 @@ module.exports = function(grunt)
         },
 
         watch: {
-            options: {
-                livereload: true
-            },
 
             css: {
                 files: ['css/**/*.*'],
-                tasks: ['cssmin', 'hashres:prod']
+                tasks: ['cssmin', 'hashres:prod'],
+                options: {livereload: true}
             },
 
             scripts: {
                 files: ['js/**/*.*'],
-                tasks: ['concat', 'uglify', 'eslint', 'hashres:prod']
+                tasks: ['concat', 'uglify', 'eslint', 'hashres:prod'],
+                options: {livereload: true}
             },
 
             html: {
-                files: ['*.html']
+                files: ['*.html'],
+                options: {livereload: true}
             }
         },
 
