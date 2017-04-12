@@ -1,0 +1,1 @@
+ts\CDrawingArea.ts ts\CMenuParser.ts ts\CShape.ts ts\CShapeApp.ts ts\main.ts --removeComments --noImplicitAny --preserveConstEnums --target ES5 --module system --out js/tsScripts.js

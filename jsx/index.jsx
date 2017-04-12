@@ -44,16 +44,10 @@ class ShapesSettings extends React.Component {
 }
 
 class SelectShape extends React.Component {
-
-    handleChange(event) {
-        event.preventDefault();
-        syncShapeMenu();
-    }
-
     render() {
         return (
             <div className="selecting_shapes_block">
-                <select name="shapes" id="shape_selector" className="shape_selector" onChange={ this.handleChange }>
+                <select name="shapes" id="shape_selector" className="shape_selector">
                     <option value="triangle">Triangle</option>
                     <option value="rectangle">Rectangle</option>
                     <option value="circle">Circle</option>

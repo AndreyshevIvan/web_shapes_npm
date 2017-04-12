@@ -68,8 +68,9 @@ module.exports = function(grunt)
         },
 
         clean: {
-            beforeBuild: ['build/'],
-            afterBuild: ['build/scripts.js']
+            scripts: ['build/scripts.js'],
+            js_min: ['build/*.js'],
+            css_min: ['build/*.css']
         },
 
         connect: {
@@ -116,13 +117,16 @@ module.exports = function(grunt)
 
         hashres: {
             options: {
-                fileNameFormat: '${name}.[${hash}].${ext}'
+                fileNameFormat: '${name}.[${hash}].${ext}',
+                renameFiles: true
             },
 
             prod: {
                 src: [
                     'build/scripts.min.js',
-                    'build/styles.min.css'
+                    'build/styles.min.css',
+                    'build/react-dom.js',
+                    'build/react.js'
                 ],
 
                 dest: ['index.html']
@@ -133,13 +137,23 @@ module.exports = function(grunt)
 
             css: {
                 files: ['css/**/*.*'],
-                tasks: ['cssmin', 'hashres:prod'],
+                tasks: ['clean:css_min', 'cssmin', 'hashres:prod'],
                 options: {livereload: true}
             },
 
             scripts: {
                 files: ['ts/**/*.*', 'jsx/**/*.*'],
-                tasks: ['tslint', 'ts', 'react', 'concat', 'uglify', 'clean:afterBuild', 'hashres:prod'],
+                tasks: ['clean:js_min',
+                        'tslint',
+                        'ts',
+                        'react',
+                        'copy:react',
+                        'concat',
+                        'uglify',
+                        'clean:scripts',
+                        'hashres:prod',
+                        'copy:systemjs'
+                ],
                 options: {livereload: true}
             },
 
@@ -170,7 +184,7 @@ module.exports = function(grunt)
     grunt.loadNpmTasks('grunt-open');
 
     grunt.registerTask('default', [
-            'clean:beforeBuild',
+            'clean',
             'tslint',
             'ts',
             'react',
@@ -178,9 +192,9 @@ module.exports = function(grunt)
             'concat',
             'uglify',
             'cssmin',
+            'clean:scripts',
             'hashres:prod',
             'copy:systemjs',
-            'clean:afterBuild',
             'connect:server',
             'watch'
     ]);
