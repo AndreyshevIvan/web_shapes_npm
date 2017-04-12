@@ -21,7 +21,6 @@
     "grunt-tslint": "^5.0.1",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
-    "sax": "^1.2.2",
     "systemjs": "^0.20.12",
     "tslint": "^5.1.0",
     "typescript": "^2.2.2"
