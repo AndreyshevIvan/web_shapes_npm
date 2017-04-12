@@ -2,10 +2,14 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; windows-1251" />
     <link rel="stylesheet" href="build/styles.min.[052d62a7].css" />
-    <script type="text/javascript" src="build/scripts.min.[60acacf7].js"></script>
     <title>ShapeDraw</title>
 </head>
 <body>
+    <script type="text/javascript" src="build/system.js"></script>
+    <script type="text/javascript" src="node_modules/react/dist/react.min.js"></script>
+    <script type="text/javascript" src="node_modules/react-dom/dist/react-dom.min.js"></script>
+    <script type="text/javascript" src="build/scripts.min.[b39052e0].js"></script>
+    <script type="text/javascript" src="build/index.js"></script>
     <div class="application_box">
         <div id="menu" class="menu">
             <h1 class="application_title">Drawing Shape</h1>
@@ -111,5 +115,6 @@
     <script type="text/javascript" src="js/menuParser.js"></script>
     <script type="text/javascript" src="js/handleEvents.js"></script>
     <script>initDrawing()</script>
+    <script>System.import('build/index.js');</script>
     <script src="//localhost:35729/livereload.js"></script>
 </body>

@@ -3,6 +3,75 @@ module.exports = function(grunt)
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
 
+        copy: {
+            systemjs: {
+                files:
+                    [
+                        {
+                            expand: true,
+                            cwd: 'node_modules/systemjs/dist/',
+                            src: 'system.js',
+                            dest: 'build/'
+                        }
+                    ]
+            },
+            react: {
+                files:
+                    [
+                        {
+                            expand: true,
+                            cwd: 'node_modules/react/dist/',
+                            src: 'react.min.js',
+                            dest: 'build/'
+                        },
+                        {
+                            expand: true,
+                            cwd: 'node_modules/react-dom/dist/',
+                            src: 'react-dom.min.js',
+                            dest: 'build/'
+                        }
+                    ],
+            }
+        },
+
+        ts: {
+            ts: {
+                src: ['ts/*.ts'],
+                dest: 'js/',
+                ext: '.js',
+                options: {
+                    module: 'system',
+                    target: 'es5',
+                    noImplicitAny: true,
+                    noEmitOnError: true,
+                    sourceMap: false
+                }
+            }
+        },
+
+        tslint: {
+            options:
+                {
+                    configFile: 'tsconfig.json'
+                },
+            validate: ['ts/*.ts']
+        },
+
+        react: {
+            single_file_output:
+            {
+                files:
+                    {
+                        'build/index.js': 'jsx/index.jsx'
+                    }
+            }
+        },
+
+        clean: {
+            beforeBuild: ['build/'],
+            afterBuild: ['build/scripts.js']
+        },
+
         connect: {
             server: {
                 options: {
@@ -45,10 +114,6 @@ module.exports = function(grunt)
             }
         },
 
-        eslint: {
-            target: ['build/scripts.js']
-        },
-
         hashres: {
             options: {
                 fileNameFormat: '${name}.[${hash}].${ext}'
@@ -73,8 +138,8 @@ module.exports = function(grunt)
             },
 
             scripts: {
-                files: ['js/**/*.*'],
-                tasks: ['concat', 'uglify', 'eslint', 'hashres:prod'],
+                files: ['ts/**/*.*', 'jsx/**/*.*'],
+                tasks: ['tslint', 'ts', 'react', 'concat', 'uglify', 'clean:afterBuild', 'hashres:prod'],
                 options: {livereload: true}
             },
 
@@ -91,22 +156,32 @@ module.exports = function(grunt)
         }
     });
 
+    grunt.loadNpmTasks('grunt-ts'),
+    grunt.loadNpmTasks('grunt-tslint');
+    grunt.loadNpmTasks('grunt-react');
+    grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-cssmin');
     grunt.loadNpmTasks('grunt-contrib-connect');
+    grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-hashres');
-    grunt.loadNpmTasks('grunt-eslint');
     grunt.loadNpmTasks('grunt-open');
 
     grunt.registerTask('default', [
+            'clean:beforeBuild',
+            'tslint',
+            'ts',
+            'react',
+            'copy:react',
             'concat',
             'uglify',
             'cssmin',
-            'eslint',
             'hashres:prod',
+            'copy:systemjs',
+            'clean:afterBuild',
             'connect:server',
             'watch'
-]);
+    ]);
 };

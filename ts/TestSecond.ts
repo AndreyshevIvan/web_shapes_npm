@@ -1,0 +1,1 @@
+import firstTest = require("./TestFirst");
