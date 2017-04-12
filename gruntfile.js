@@ -21,13 +21,13 @@ module.exports = function(grunt)
                         {
                             expand: true,
                             cwd: 'node_modules/react/dist/',
-                            src: 'react.min.js',
+                            src: 'react.js',
                             dest: 'build/'
                         },
                         {
                             expand: true,
                             cwd: 'node_modules/react-dom/dist/',
-                            src: 'react-dom.min.js',
+                            src: 'react-dom.js',
                             dest: 'build/'
                         }
                     ],
@@ -35,16 +35,16 @@ module.exports = function(grunt)
         },
 
         ts: {
-            ts: {
+            default: {
                 src: ['ts/*.ts'],
-                dest: 'js/',
-                ext: '.js',
+                out: 'js/tsScripts.js',
                 options: {
-                    module: 'system',
-                    target: 'es5',
                     noImplicitAny: true,
-                    noEmitOnError: true,
-                    sourceMap: false
+                    removeComments: true,
+                    preserveConstEnums: true,
+                    sourceMap: false,
+                    module: 'system',
+                    target: 'es5'
                 }
             }
         },

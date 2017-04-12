@@ -1,4 +1,10 @@
-function main() {
-    var element = React.createElement('h1', null, 'React');
-    ReactDOM.render(element, document.getElementById('menu'));
-}
+var Application = React.createClass ({
+    render: function() {
+        return (
+        <div className="menu">
+        </div>
+        );
+    }
+});
+
+ReactDOM.render(<Application/>, document.getElementById('application_box'));
