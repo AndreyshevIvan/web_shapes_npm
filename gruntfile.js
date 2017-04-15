@@ -68,6 +68,7 @@ module.exports = function(grunt)
         },
 
         clean: {
+            tsScripts: ['js/tsScripts.js'],
             scripts: ['build/scripts.js'],
             js_min: ['build/*.js'],
             css_min: ['build/*.css']
