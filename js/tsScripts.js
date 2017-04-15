@@ -230,20 +230,90 @@ System.register("CRectangle", ["CPoint", "CShape"], function (exports_6, context
         }
     };
 });
-System.register("CMenuParser", ["CCircle", "CPoint", "CRectangle"], function (exports_7, context_7) {
+System.register("CTriangle", ["CPoint", "CShape"], function (exports_7, context_7) {
     "use strict";
     var __moduleName = context_7 && context_7.id;
-    var CCircle_1, CPoint_3, CRectangle_1, DEFAULT_FILL_COLOR, DEFAULT_OUTLINE_COLOR, DEFAULT_OUTLINE_THICKNESS, CMenuParser;
+    var CPoint_3, CShape_3, CTriangle;
+    return {
+        setters: [
+            function (CPoint_3_1) {
+                CPoint_3 = CPoint_3_1;
+            },
+            function (CShape_3_1) {
+                CShape_3 = CShape_3_1;
+            }
+        ],
+        execute: function () {
+            CTriangle = (function (_super) {
+                __extends(CTriangle, _super);
+                function CTriangle(firstPoint, secondPoint, thirdPoint, fillColor, outlineColor, outlineThickness) {
+                    var _this = _super.call(this, fillColor, outlineColor, outlineThickness) || this;
+                    _this.x1 = firstPoint.X();
+                    _this.y1 = firstPoint.Y();
+                    _this.x2 = secondPoint.X();
+                    _this.y2 = secondPoint.Y();
+                    _this.x3 = thirdPoint.X();
+                    _this.y3 = thirdPoint.Y();
+                    return _this;
+                }
+                CTriangle.prototype.getAreaSize = function () {
+                    var firstRect = (this.x1 - this.x3) * (this.y2 - this.y3);
+                    var secondRect = (this.x2 - this.x3) * (this.y1 - this.y3);
+                    var areaSize = Math.abs(firstRect - secondRect) / 2;
+                    return areaSize;
+                };
+                CTriangle.prototype.getPerimeter = function () {
+                    var side12 = Math.sqrt(Math.pow(this.x2 - this.x1, 2) + Math.pow(this.y2 - this.y1, 2));
+                    var side23 = Math.sqrt(Math.pow(this.x3 - this.x1, 2) + Math.pow(this.y3 - this.y1, 2));
+                    var side31 = Math.sqrt(Math.pow(this.x3 - this.x2, 2) + Math.pow(this.y3 - this.y2, 2));
+                    var perimeter = side12 + side23 + side31;
+                    return perimeter;
+                };
+                CTriangle.prototype.getFirstPoint = function () {
+                    return new CPoint_3.CPoint(this.x1, this.y1);
+                };
+                CTriangle.prototype.getSecondPoint = function () {
+                    return new CPoint_3.CPoint(this.x2, this.y2);
+                };
+                CTriangle.prototype.getThirdPoint = function () {
+                    return new CPoint_3.CPoint(this.x3, this.y3);
+                };
+                CTriangle.prototype.draw = function (drawingArea) {
+                    var ctx = drawingArea.ctx;
+                    ctx.beginPath();
+                    ctx.strokeStyle = this.getOutlineColor();
+                    ctx.fillStyle = this.getFillColor();
+                    ctx.lineWidth = this.getOutlineThickness() * 2;
+                    ctx.moveTo(this.x1, this.y1);
+                    ctx.lineTo(this.x2, this.y2);
+                    ctx.lineTo(this.x3, this.y3);
+                    ctx.lineTo(this.x1, this.y1);
+                    ctx.stroke();
+                    ctx.fill();
+                };
+                return CTriangle;
+            }(CShape_3.CShape));
+            exports_7("CTriangle", CTriangle);
+        }
+    };
+});
+System.register("CMenuParser", ["CCircle", "CPoint", "CRectangle", "CTriangle"], function (exports_8, context_8) {
+    "use strict";
+    var __moduleName = context_8 && context_8.id;
+    var CCircle_1, CPoint_4, CRectangle_1, CTriangle_1, DEFAULT_FILL_COLOR, DEFAULT_OUTLINE_COLOR, DEFAULT_OUTLINE_THICKNESS, CMenuParser;
     return {
         setters: [
             function (CCircle_1_1) {
                 CCircle_1 = CCircle_1_1;
             },
-            function (CPoint_3_1) {
-                CPoint_3 = CPoint_3_1;
+            function (CPoint_4_1) {
+                CPoint_4 = CPoint_4_1;
             },
             function (CRectangle_1_1) {
                 CRectangle_1 = CRectangle_1_1;
+            },
+            function (CTriangle_1_1) {
+                CTriangle_1 = CTriangle_1_1;
             }
         ],
         execute: function () {
@@ -295,27 +365,61 @@ System.register("CMenuParser", ["CCircle", "CPoint", "CRectangle"], function (ex
                     return rect;
                 };
                 CMenuParser.prototype.getTriangle = function () {
-                    return 1;
+                    var fillColor = this.getFillColor();
+                    var outlineColor = this.getOutlineColor();
+                    var outlineThickness = this.getOutlineThickness();
+                    var firstPoint = this.getTriangleFirstPoint();
+                    var secondPoint = this.getTriangleSecondPoint();
+                    var thirdPoint = this.getTriangleThirdPoint();
+                    var triangle = new CTriangle_1.CTriangle(firstPoint, secondPoint, thirdPoint, fillColor, outlineColor, outlineThickness);
+                    return triangle;
                 };
                 CMenuParser.prototype.resetFields = function () {
                     this.perimeterTab.innerText = "Perimeter: ";
                     this.areaTab.innerText = "Area size: ";
+                    this.fillColor.value = "";
+                    this.outlineColor.value = "";
+                    this.outlineThickness.value = "";
+                    this.firstRectX.value = "";
+                    this.firstRectY.value = "";
+                    this.secondRectX.value = "";
+                    this.secondRectY.value = "";
+                    this.circleX.value = "";
+                    this.circleY.value = "";
+                    this.circleRadius.value = "";
+                    this.firstTriangleX.value = "";
+                    this.firstTriangleY.value = "";
+                    this.secondTriangleX.value = "";
+                    this.secondTriangleY.value = "";
+                    this.thirdTriangleX.value = "";
+                    this.thirdTriangleY.value = "";
                 };
                 CMenuParser.prototype.setCircleToMenu = function (circle) {
+                    this.resetFields();
                     this.setShapeToMenu(circle);
                     this.circleX.value = circle.getCenter().X();
                     this.circleY.value = -1 * circle.getCenter().Y();
                     this.circleRadius.value = circle.getRadius();
                 };
                 CMenuParser.prototype.setRectToMenu = function (rect) {
+                    this.resetFields();
                     this.setShapeToMenu(rect);
                     this.firstRectX.value = rect.getFirstPoint().X();
                     this.firstRectY.value = -1 * rect.getFirstPoint().Y();
                     this.secondRectX.value = rect.getSecondPoint().X();
                     this.secondRectY.value = -1 * rect.getSecondPoint().Y();
                 };
-                CMenuParser.prototype.setShapeToMenu = function (shape) {
+                CMenuParser.prototype.setTriangleToMenu = function (triangle) {
                     this.resetFields();
+                    this.setShapeToMenu(triangle);
+                    this.firstTriangleX.value = triangle.getFirstPoint().X();
+                    this.firstTriangleY.value = -1 * triangle.getFirstPoint().Y();
+                    this.secondTriangleX.value = triangle.getSecondPoint().X();
+                    this.secondTriangleY.value = -1 * triangle.getSecondPoint().Y();
+                    this.thirdTriangleX.value = triangle.getThirdPoint().X();
+                    this.thirdTriangleY.value = -1 * triangle.getThirdPoint().Y();
+                };
+                CMenuParser.prototype.setShapeToMenu = function (shape) {
                     this.perimeterTab.innerText += shape.getPerimeter().toString();
                     this.areaTab.innerText += shape.getAreaSize().toString();
                     this.fillColor.value = shape.getFillColor();
@@ -334,20 +438,35 @@ System.register("CMenuParser", ["CCircle", "CPoint", "CRectangle"], function (ex
                 CMenuParser.prototype.getFirstRectPoint = function () {
                     var x = this.getNumValueIfExist(this.firstRectX, 0);
                     var y = this.getNumValueIfExist(this.firstRectY, 0);
-                    return new CPoint_3.CPoint(x, -1 * y);
+                    return new CPoint_4.CPoint(x, -1 * y);
                 };
                 CMenuParser.prototype.getSecondRectPoint = function () {
                     var x = this.getNumValueIfExist(this.secondRectX, 0);
                     var y = this.getNumValueIfExist(this.secondRectY, 0);
-                    return new CPoint_3.CPoint(x, -1 * y);
+                    return new CPoint_4.CPoint(x, -1 * y);
                 };
                 CMenuParser.prototype.getCircleCoordinates = function () {
                     var x = this.getNumValueIfExist(this.circleX, 0);
                     var y = this.getNumValueIfExist(this.circleY, 0);
-                    return new CPoint_3.CPoint(x, -1 * y);
+                    return new CPoint_4.CPoint(x, -1 * y);
                 };
                 CMenuParser.prototype.getCircleRadius = function () {
                     return this.getNumValueIfExist(this.circleRadius, 10);
+                };
+                CMenuParser.prototype.getTriangleFirstPoint = function () {
+                    var x = this.getNumValueIfExist(this.firstTriangleX, 0);
+                    var y = this.getNumValueIfExist(this.firstTriangleY, 0);
+                    return new CPoint_4.CPoint(x, -1 * y);
+                };
+                CMenuParser.prototype.getTriangleSecondPoint = function () {
+                    var x = this.getNumValueIfExist(this.secondTriangleX, 0);
+                    var y = this.getNumValueIfExist(this.secondTriangleY, 0);
+                    return new CPoint_4.CPoint(x, -1 * y);
+                };
+                CMenuParser.prototype.getTriangleThirdPoint = function () {
+                    var x = this.getNumValueIfExist(this.thirdTriangleX, 0);
+                    var y = this.getNumValueIfExist(this.thirdTriangleY, 0);
+                    return new CPoint_4.CPoint(x, -1 * y);
                 };
                 CMenuParser.prototype.getStrValueIfExist = function (form, defaultValue) {
                     var value = (form.value === "") ? defaultValue : form.value;
@@ -359,13 +478,13 @@ System.register("CMenuParser", ["CCircle", "CPoint", "CRectangle"], function (ex
                 };
                 return CMenuParser;
             }());
-            exports_7("CMenuParser", CMenuParser);
+            exports_8("CMenuParser", CMenuParser);
         }
     };
 });
-System.register("CShapeApp", ["CDrawingArea", "CMenuParser"], function (exports_8, context_8) {
+System.register("CShapeApp", ["CDrawingArea", "CMenuParser"], function (exports_9, context_9) {
     "use strict";
-    var __moduleName = context_8 && context_8.id;
+    var __moduleName = context_9 && context_9.id;
     var CDrawingArea_1, CMenuParser_1, CShapeApp;
     return {
         setters: [
@@ -419,7 +538,9 @@ System.register("CShapeApp", ["CDrawingArea", "CMenuParser"], function (exports_
                         this.menuParser.setCircleToMenu(circle);
                     }
                     if (shapeName === "triangle") {
-                        return;
+                        var triangle = this.menuParser.getTriangle();
+                        triangle.draw(this.canvas);
+                        this.menuParser.setTriangleToMenu(triangle);
                     }
                     if (shapeName === "rectangle") {
                         var rect = this.menuParser.getRectangle();
@@ -438,74 +559,7 @@ System.register("CShapeApp", ["CDrawingArea", "CMenuParser"], function (exports_
                 };
                 return CShapeApp;
             }());
-            exports_8("CShapeApp", CShapeApp);
-        }
-    };
-});
-System.register("CTriangle", ["CPoint", "CShape"], function (exports_9, context_9) {
-    "use strict";
-    var __moduleName = context_9 && context_9.id;
-    var CPoint_4, CShape_3, CTriangle;
-    return {
-        setters: [
-            function (CPoint_4_1) {
-                CPoint_4 = CPoint_4_1;
-            },
-            function (CShape_3_1) {
-                CShape_3 = CShape_3_1;
-            }
-        ],
-        execute: function () {
-            CTriangle = (function (_super) {
-                __extends(CTriangle, _super);
-                function CTriangle(firstPoint, secondPoint, thirdPoint, fillColor, outlineColor, outlineThickness) {
-                    var _this = _super.call(this, fillColor, outlineColor, outlineThickness) || this;
-                    _this.x1 = firstPoint.X();
-                    _this.y1 = firstPoint.Y();
-                    _this.x2 = secondPoint.X();
-                    _this.y2 = secondPoint.Y();
-                    _this.x3 = thirdPoint.X();
-                    _this.y3 = thirdPoint.Y();
-                    return _this;
-                }
-                CTriangle.prototype.getAreaSize = function () {
-                    var firstRect = (this.x1 - this.x3) * (this.y2 - this.y3);
-                    var secondRect = (this.x2 - this.x3) * (this.y1 - this.y3);
-                    var areaSize = Math.abs(firstRect - secondRect) / 2;
-                    return areaSize;
-                };
-                CTriangle.prototype.getPerimeter = function () {
-                    var side12 = Math.sqrt(Math.pow(this.x2 - this.x1, 2) + Math.pow(this.y2 - this.y1, 2));
-                    var side23 = Math.sqrt(Math.pow(this.x3 - this.x1, 2) + Math.pow(this.y3 - this.y1, 2));
-                    var side31 = Math.sqrt(Math.pow(this.x3 - this.x2, 2) + Math.pow(this.y3 - this.y2, 2));
-                    var perimeter = side12 + side23 + side31;
-                    return perimeter;
-                };
-                CTriangle.prototype.getFirstPoint = function () {
-                    return new CPoint_4.CPoint(this.x1, this.y1);
-                };
-                CTriangle.prototype.getSecondPoint = function () {
-                    return new CPoint_4.CPoint(this.x2, this.y2);
-                };
-                CTriangle.prototype.getThirdPoint = function () {
-                    return new CPoint_4.CPoint(this.x3, this.y3);
-                };
-                CTriangle.prototype.draw = function (drawingArea) {
-                    var ctx = drawingArea.ctx;
-                    ctx.beginPath();
-                    ctx.strokeStyle = this.getOutlineColor();
-                    ctx.fillStyle = this.getFillColor();
-                    ctx.lineWidth = this.getOutlineThickness() * 2;
-                    ctx.moveTo(this.x1, this.y1);
-                    ctx.lineTo(this.x2, this.y2);
-                    ctx.lineTo(this.x3, this.y3);
-                    ctx.lineTo(this.x1, this.y1);
-                    ctx.stroke();
-                    ctx.fill();
-                };
-                return CTriangle;
-            }(CShape_3.CShape));
-            exports_9("CTriangle", CTriangle);
+            exports_9("CShapeApp", CShapeApp);
         }
     };
 });

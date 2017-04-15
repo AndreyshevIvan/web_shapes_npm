@@ -1,6 +1,7 @@
 import {CCircle} from "./CCircle";
 import {CPoint} from "./CPoint";
 import {CRectangle} from "./CRectangle";
+import {CTriangle} from "./CTriangle";
 import {IShape} from "./IShape";
 
 const DEFAULT_FILL_COLOR: string = "#3498DB";
@@ -44,7 +45,6 @@ export class CMenuParser {
         const outlineThickness = this.getOutlineThickness();
         const coordinate = this.getCircleCoordinates();
         const radius = this.getCircleRadius();
-
         const rect: CCircle = new CCircle(coordinate, radius, fillColor, outlineColor, outlineThickness);
         return rect;
     }
@@ -54,33 +54,66 @@ export class CMenuParser {
         const outlineThickness = this.getOutlineThickness();
         const firstPoint = this.getFirstRectPoint();
         const secondPoint = this.getSecondRectPoint();
-
         const rect: CRectangle = new CRectangle(firstPoint, secondPoint, fillColor, outlineColor, outlineThickness);
         return rect;
     }
-    public getTriangle(): number {
-        return 1;
+    public getTriangle(): CTriangle {
+        const fillColor = this.getFillColor();
+        const outlineColor = this.getOutlineColor();
+        const outlineThickness = this.getOutlineThickness();
+        const firstPoint = this.getTriangleFirstPoint();
+        const secondPoint = this.getTriangleSecondPoint();
+        const thirdPoint = this.getTriangleThirdPoint();
+        const triangle = new CTriangle(firstPoint, secondPoint, thirdPoint, fillColor, outlineColor, outlineThickness);
+        return triangle;
     }
+
     public resetFields(): void {
         this.perimeterTab.innerText = "Perimeter: ";
         this.areaTab.innerText = "Area size: ";
+        this.fillColor.value = "";
+        this.outlineColor.value = "";
+        this.outlineThickness.value = "";
+        this.firstRectX.value = "";
+        this.firstRectY.value = "";
+        this.secondRectX.value = "";
+        this.secondRectY.value = "";
+        this.circleX.value = "";
+        this.circleY.value = "";
+        this.circleRadius.value = "";
+        this.firstTriangleX.value = "";
+        this.firstTriangleY.value = "";
+        this.secondTriangleX.value = "";
+        this.secondTriangleY.value = "";
+        this.thirdTriangleX.value = "";
+        this.thirdTriangleY.value = "";
     }
     public setCircleToMenu(circle: CCircle): void {
+        this.resetFields();
         this.setShapeToMenu(circle);
         this.circleX.value = circle.getCenter().X();
         this.circleY.value = -1 * circle.getCenter().Y();
         this.circleRadius.value = circle.getRadius();
     }
     public setRectToMenu(rect: CRectangle): void {
+        this.resetFields();
         this.setShapeToMenu(rect);
         this.firstRectX.value = rect.getFirstPoint().X();
         this.firstRectY.value = -1 * rect.getFirstPoint().Y();
         this.secondRectX.value = rect.getSecondPoint().X();
         this.secondRectY.value = -1 * rect.getSecondPoint().Y();
     }
-
-    public setShapeToMenu(shape: IShape): void {
+    public setTriangleToMenu(triangle: CTriangle): void {
         this.resetFields();
+        this.setShapeToMenu(triangle);
+        this.firstTriangleX.value = triangle.getFirstPoint().X();
+        this.firstTriangleY.value = -1 * triangle.getFirstPoint().Y();
+        this.secondTriangleX.value = triangle.getSecondPoint().X();
+        this.secondTriangleY.value = -1 * triangle.getSecondPoint().Y();
+        this.thirdTriangleX.value = triangle.getThirdPoint().X();
+        this.thirdTriangleY.value = -1 * triangle.getThirdPoint().Y();
+    }
+    public setShapeToMenu(shape: IShape): void {
         this.perimeterTab.innerText += shape.getPerimeter().toString();
         this.areaTab.innerText += shape.getAreaSize().toString();
         this.fillColor.value = shape.getFillColor();
@@ -97,6 +130,7 @@ export class CMenuParser {
     private getOutlineThickness() {
         return this.getNumValueIfExist(this.outlineThickness, DEFAULT_OUTLINE_THICKNESS);
     }
+
     private getFirstRectPoint(): CPoint {
         const x: number = this.getNumValueIfExist(this.firstRectX, 0);
         const y: number = this.getNumValueIfExist(this.firstRectY, 0);
@@ -107,6 +141,7 @@ export class CMenuParser {
         const y: number = this.getNumValueIfExist(this.secondRectY, 0);
         return new CPoint(x, -1 * y);
     }
+
     private getCircleCoordinates(): CPoint {
         const x: number = this.getNumValueIfExist(this.circleX, 0);
         const y: number = this.getNumValueIfExist(this.circleY, 0);
@@ -114,6 +149,22 @@ export class CMenuParser {
     }
     private getCircleRadius(): number {
         return this.getNumValueIfExist(this.circleRadius, 10);
+    }
+
+    private getTriangleFirstPoint(): CPoint {
+        const x: number = this.getNumValueIfExist(this.firstTriangleX, 0);
+        const y: number = this.getNumValueIfExist(this.firstTriangleY, 0);
+        return new CPoint(x, -1 * y);
+    }
+    private getTriangleSecondPoint(): CPoint {
+        const x: number = this.getNumValueIfExist(this.secondTriangleX, 0);
+        const y: number = this.getNumValueIfExist(this.secondTriangleY, 0);
+        return new CPoint(x, -1 * y);
+    }
+    private getTriangleThirdPoint(): CPoint {
+        const x: number = this.getNumValueIfExist(this.thirdTriangleX, 0);
+        const y: number = this.getNumValueIfExist(this.thirdTriangleY, 0);
+        return new CPoint(x, -1 * y);
     }
 
     private getStrValueIfExist(form: HTMLFormElement, defaultValue: string): string {

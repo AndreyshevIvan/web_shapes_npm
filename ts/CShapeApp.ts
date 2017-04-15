@@ -2,6 +2,7 @@ import {CCircle} from "./CCircle";
 import {CDrawingArea} from "./CDrawingArea";
 import {CMenuParser} from "./CMenuParser";
 import {CRectangle} from "./CRectangle";
+import {CTriangle} from "./CTriangle";
 
 export class CShapeApp {
     private canvas: CDrawingArea;
@@ -24,14 +25,12 @@ export class CShapeApp {
         this.resetMenu();
         this.setNewMenu();
     }
-
     private resetMenu(): void {
         this.circleMenu.style.display = "none";
         this.triangleMenu.style.display = "none";
         this.rectangleMenu.style.display = "none";
         this.menuParser.resetFields();
     }
-
     private setNewMenu(): void {
         const shapeName = this.menuParser.getShapeName();
 
@@ -55,7 +54,9 @@ export class CShapeApp {
             this.menuParser.setCircleToMenu(circle);
         }
         if (shapeName === "triangle") {
-            return;
+            const triangle: CTriangle = this.menuParser.getTriangle();
+            triangle.draw(this.canvas);
+            this.menuParser.setTriangleToMenu(triangle);
         }
         if (shapeName === "rectangle") {
             const rect: CRectangle = this.menuParser.getRectangle();
