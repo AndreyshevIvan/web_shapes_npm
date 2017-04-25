@@ -70,6 +70,7 @@ module.exports = function(grunt)
         clean: {
             tsScripts: ['js/tsScripts.js'],
             scripts: ['build/scripts.js'],
+            jsFolder: ['js'],
             js_min: ['build/*.js'],
             css_min: ['build/*.css']
         },
@@ -145,6 +146,7 @@ module.exports = function(grunt)
             scripts: {
                 files: ['ts/**/*.*', 'jsx/**/*.*'],
                 tasks: ['clean:js_min',
+                        'shell',
                         'tslint',
                         'ts',
                         'react',
@@ -153,7 +155,8 @@ module.exports = function(grunt)
                         'uglify',
                         'clean:scripts',
                         'hashres:prod',
-                        'copy:systemjs'
+                        'copy:systemjs',
+                        'clean:jsFolder'
                 ],
                 options: {livereload: true}
             },
@@ -168,7 +171,16 @@ module.exports = function(grunt)
             dev: {
                 path: 'http://localhost:8080/index.html'
             }
-        }
+        },
+
+        shell: {
+            options: {
+                stderr: true
+            },
+            target: {
+                command: 'cspell ts/*.ts'
+            }
+        },
     });
 
     grunt.loadNpmTasks('grunt-ts'),
@@ -183,9 +195,11 @@ module.exports = function(grunt)
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-hashres');
     grunt.loadNpmTasks('grunt-open');
+    grunt.loadNpmTasks('grunt-shell');
 
     grunt.registerTask('default', [
             'clean',
+            'shell',
             'tslint',
             'ts',
             'react',
@@ -196,6 +210,7 @@ module.exports = function(grunt)
             'clean:scripts',
             'hashres:prod',
             'copy:systemjs',
+            'clean:jsFolder',
             'connect:server',
             'watch'
     ]);
